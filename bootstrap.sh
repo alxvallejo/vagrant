@@ -38,7 +38,8 @@ fi
 sed -i -- 's/AllowOverride None/AllowOverride all/g' /etc/apache2/apache2.conf
 sed -i -- 's/128M/512M/g' /etc/php5/apache2/php.ini
 echo 'xdebug.remote_enable = on' >> /etc/php5/apache2/conf.d/xdebug.ini
-echo 'xdebug.remote_connect_back = on' >> /etc/php5/apache2/conf.d/xdebug.ini
+# Set host per settings here: https://danemacmillan.com/how-to-configure-xdebug-in-phpstorm-through-vagrant/#content-ip
+echo 'xdebug.remote_host = 10.0.2.2' >> /etc/php5/apache2/conf.d/xdebug.ini
 echo 'xdebug.max_nesting_level = 256' >> /etc/php5/apache2/conf.d/xdebug.ini
 echo 'xdebug.idekey = "PHPSTORM"' >> /etc/php5/apache2/conf.d/xdebug.ini
 a2enmod rewrite
