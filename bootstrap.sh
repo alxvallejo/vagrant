@@ -5,7 +5,7 @@ apt-get install -y apache2
 apt-get install -y curl
 apt-get install -y git
 apt-get install -y unzip
-apt-get install -y php5
+apt-get install -y php5-cli
 apt-get install -y php5-mysql
 apt-get install -y php5-gd
 apt-get install -y php5-curl
@@ -20,7 +20,7 @@ mysql -uroot -e "create database vagrant;"
 # Install drush
 if ! [ -x "$(command -v composer)" ]; then
     sudo curl -sS https://getcomposer.org/installer | sudo php;
-    ln -s /home/vagrant/composer.phar /usr/local/bin/composer;
+    sudo ln -s /home/vagrant/composer.phar /usr/local/bin/composer;
 fi
 if ! [ -x "$(command -v drush)" ]; then
     /home/vagrant/composer.phar global require drush/drush:6.*;
@@ -37,10 +37,10 @@ fi
 # Set server config
 sed -i -- 's/AllowOverride None/AllowOverride all/g' /etc/apache2/apache2.conf
 sed -i -- 's/128M/512M/g' /etc/php5/apache2/php.ini
-echo 'xdebug.remote_enable = on' >> /etc/php5/mods-available/xdebug.ini
-echo 'xdebug.remote_connect_back = on' >> /etc/php5/mods-available/xdebug.ini
-echo 'xdebug.max_nesting_level = 256' >> /etc/php5/mods-available/xdebug.ini
-echo 'xdebug.idekey = "PHPSTORM"' >> /etc/php5/mods-available/xdebug.ini
+echo 'xdebug.remote_enable = on' >> /etc/php5/apache2/conf.d/xdebug.ini
+echo 'xdebug.remote_connect_back = on' >> /etc/php5/apache2/conf.d/xdebug.ini
+echo 'xdebug.max_nesting_level = 256' >> /etc/php5/apache2/conf.d/xdebug.ini
+echo 'xdebug.idekey = "PHPSTORM"' >> /etc/php5/apache2/conf.d/xdebug.ini
 a2enmod rewrite
 service apache2 restart
 
